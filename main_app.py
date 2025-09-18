@@ -1,6 +1,6 @@
 import streamlit as st
 from datetime import datetime, timedelta
-from funciones import conteo_etnias
+from funciones import conteo_etnias, articulos_fechas
 import plotly.graph_objects as go
 
 st.write("**Ethnicity relevance in MEdia**")
@@ -29,6 +29,14 @@ if st.button("Get data and chart"):
 
     ))
     st.plotly_chart(fig)
+
+fecha = st.date_input("Choose date for articles")
+fecha_f = str(fecha + timedelta(1))
+fecha = str(fecha)
+if st.button("Get articles"):
+    
+    df_articulos = articulos_fechas(etnia_s, fecha, fecha_f)
+    st.dataframe(df_articulos[["title", "url", "sourcecountry"]], width="stretch", column_config={"url": st.column_config.LinkColumn()})
 
 
 
